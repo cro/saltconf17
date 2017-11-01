@@ -13,6 +13,8 @@ DETAILS = {}
 # Want logging!
 log = logging.getLogger(__file__)
 
+__proxyenabled__ = ['owm']
+
 try:
     import pyowm
     HAS_PYOWM = True
