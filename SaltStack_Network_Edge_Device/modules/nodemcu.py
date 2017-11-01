@@ -27,6 +27,7 @@ def reset():
 def scan():
     scan_results = run('scan_results.lua')
     scan_dictionary = {}
+    scan_parsed = {}
     for line in scan_results['stderr'].splitlines():
         if line.startswith('=+-=+-=+-'):
             continue
@@ -39,18 +40,12 @@ def scan():
         if line.startswith('--done--'):
             break
 
-    scan_parsed = {}
-    for k, v in scan_dictionary.iteritems():
-        ap_details = v.split(',')
-        auth_type = int(ap_details[2])
-        try:
-            auth_type_string = AUTH_TYPES[auth_type]
-        except IndexError:
-            auth_type_string = 'Unknown'
-        scan_parsed[k] = { 'ssid': ap_details[0],
-                           'rssi': ap_details[1],
-                           'authtype': AUTH_TYPES[auth_type],
-                           'channel': ap_details[3]
-                           }
+        if scan_dictionary:
+            try:
+                auth_type_string = AUTH_TYPES[scan_dictionary["authmode"]]
+            except IndexError:
+                auth_type_string = 'Unknown'
+            scan_dictionary["authmode"] = auth_type_string
+            scan_parsed[scan_dictionary["bssid"]] = scan_dictionary
     return scan_parsed
 
