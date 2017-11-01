@@ -42,7 +42,7 @@ def scan():
 
         if scan_dictionary:
             try:
-                auth_type_string = AUTH_TYPES[scan_dictionary["authmode"]]
+                auth_type_string = AUTH_TYPES[int(scan_dictionary["authmode"])]
             except IndexError:
                 auth_type_string = 'Unknown'
             scan_dictionary["authmode"] = auth_type_string
