@@ -37,6 +37,7 @@ def init(opts):
     try:
         DETAILS['apikey'] = opts['proxy']['apikey']
         DETAILS['owm_object'] = pyowm.OWM(DETAILS['apikey'])
+        DETAILS['stations_manager'] = DETAILS['owm_object'].stations_manager()
         DETAILS['initialized'] = ping()
     except KeyError:
         log.warning('OpenWeatherMap proxy needs an OpenWeatherMap API key in the proxy configuration.')
@@ -76,6 +77,8 @@ def shutdown(opts):
     '''
     log.debug('OpenWeatherMap proxy shutdown() called...')
 
+def sta():
+    return DETAILS['stations_manager']
 
 def api():
     return DETAILS['owm_object']
