@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+
+
+if [ "$1" = "-q" ]; then
+   shift
+   terminal-notifier -title Salt -message "Starting $@" -appIcon file:///Users/cro/src/ve/ssc3/share/saltStack_bug_whiteOnBlack.png
+   salt-call --local "$@" 2>/dev/null
+else
+    terminal-notifier -title Salt -message "Starting $@" -appIcon file:///Users/cro/src/ve/ssc3/share/saltStack_bug_whiteOnBlack.png
+   salt-call --local "$@" 
+fi
+if [ "$?" = "0" ]; then
+    terminal-notifier -title Salt -message "SUCCEED: $@" -appIcon file:///Users/cro/src/ve/ssc3/share/saltStack_bug_whiteOnBlack.png
+else
+    terminal-notifier -title Salt -message "FAIL: $@" -appIcon file:///Users/cro/src/ve/ssc3/share/saltStack_bug_whiteOnBlack.png
+fi
